@@ -10,4 +10,11 @@
         <item>d10</item>
         <item>d12</item>
     </string-array>
+    <string name="strength"></string>
+    <string name="dexterity"></string>
+    <string name="constitution"></string>
+    <string name="intelligence"></string>
+    <string name="wisdom"></string>
+    <string name="charisma"></string>
+    <string name="profile_name"></string>
 </resources>
