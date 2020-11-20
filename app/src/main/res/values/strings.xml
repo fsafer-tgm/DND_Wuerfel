@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DND_Wuerfel</string>
+    <string name="file"/>
+    <string name="create_new"/>
+    <string name="open"/>
+    <string-array name="Wuerfel">
+        <item>d4</item>
+        <item>d6</item>
+        <item>d8</item>
+        <item>d10</item>
+        <item>d12</item>
+    </string-array>
+</resources>
