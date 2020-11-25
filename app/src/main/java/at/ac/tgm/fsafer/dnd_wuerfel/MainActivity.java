@@ -1,6 +1,5 @@
 package at.ac.tgm.fsafer.dnd_wuerfel;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
