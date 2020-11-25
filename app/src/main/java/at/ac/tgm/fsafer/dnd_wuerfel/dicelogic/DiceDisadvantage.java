@@ -2,15 +2,29 @@ package at.ac.tgm.fsafer.dnd_wuerfel.dicelogic;
 
 import java.util.Random;
 
+/**
+ * Diese Klasse würfelt 2 mal und gibt beide Ergebnisse zurück. Jedoch wird nur das kleinere Ergebnis weiter verwendet
+ * @author Florian Safer
+ * @version 2020-11-25
+ */
 public class DiceDisadvantage extends DicesDecorator{
 
     private Dices d;
 
+    /**
+     * Stqndardkonstruktor
+     * @param dices
+     */
     public DiceDisadvantage(Dices dices) {
         super(dices);
         this.d = dices;
     }
 
+    /**
+     * Überschriebene rollTheDice Methode, welche zweimal würfelt und beide Ergebnisse zurückgibt. Jedoch ist nur das
+     * kleinere Ergebnis von Bedeutung
+     * @return beide Ergebnisse
+     */
     @Override
     public String rollTheDice() {
         Random r = new Random();
@@ -19,26 +33,22 @@ public class DiceDisadvantage extends DicesDecorator{
         StringBuilder b = new StringBuilder();
         b.append("Nachteil(");
         if(newVal <= tmp){
-            if(newVal < 10)
-                b.append("0");
             b.append(newVal);
             b.append(", ");
-            if(tmp < 10)
-                b.append("0");
             b.append(tmp);
         }else{
-            if(tmp < 10)
-                b.append("0");
             b.append(tmp);
             b.append(", ");
-            if(newVal < 10)
-                b.append("0");
             b.append(newVal);
         }
         b.append(")");
         return b.toString();
     }
 
+    /**
+     * Methode, die die Seiten des Würfels zurückgeben kann
+     * @return Seiten des Würfels
+     */
     @Override
     public int getSites() {
         return this.d.getSites();
