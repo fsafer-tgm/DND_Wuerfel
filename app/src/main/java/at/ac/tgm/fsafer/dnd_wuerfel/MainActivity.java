@@ -79,10 +79,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch (item.getItemId()) {
             case R.id.addProfile:
-                Intent explicit = new Intent(MainActivity.this, CreateProfile.class);
-                startActivity(explicit);
+                Intent addProfile = new Intent(this, CreateProfile.class);
+                startActivity(addProfile);
+                return true;
             case R.id.proficiency:
-
+                Intent proficiency = new Intent(this, AddProficiency.class);
+                startActivity(proficiency);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -136,13 +139,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         EditText e;
         if (select == true){
             c = findViewById(R.id.checkAbility);
-            this.ability = readAbility;
-            toAdd += Integer.parseInt(this.readAbility);
+            if (c.isChecked()){
+                this.ability = readAbility;
+                toAdd += Integer.parseInt(this.readAbility);
+            }
 
             c = findViewById(R.id.checkProficiency);
-            e = findViewById(R.id.editProficiecy);
             if(c.isChecked()){
-                this.proficiecy = e.getText().toString();
+                SharedPreferences sharedPref = getSharedPreferences("Proficiency", 0);
+                this.proficiecy = sharedPref.getString(String.valueOf(R.string.proficiency),"");
                 toAdd += Integer.parseInt(this.proficiecy);
             }
 

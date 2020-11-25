@@ -16,6 +16,7 @@
     <string name="intelligence"></string>
     <string name="wisdom"></string>
     <string name="charisma"></string>
+    <string name="proficiency"></string>
     <string-array name="abilitybonus">
         <item>Strength</item>
         <item>Dexternity</item>
