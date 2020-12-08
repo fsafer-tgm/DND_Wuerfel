@@ -14,7 +14,7 @@ import at.ac.tgm.fsafer.dnd_wuerfel.dicelogic.*;
 /**
  * MainAcitivity für die DND Würfel APP.
  * @author Florian Safer
- * @version 2020-11-25
+ * @version 2020-12-08
  */
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -124,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * Methode, um alle ausgewählten Boni hinzuzufügen (DiceBonus)
+     * @param normal Der normale Ausgangswürfel (je nach Auswahl)
+     * @return Fertiger Würfel mit allen geaddeten Boni
+     */
     public Dices addBonus(Dices normal){
         System.out.println("Bin im Bonus");
         Dices tmp;
@@ -143,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return normal;
     }
 
+    /**
+     * Methode, die verwendet wird, um alle gespeicherten Attribute für die Boni auf 0 zu setzen
+     */
     public void setAttributes(){
         this.ability = 0;
         this.proficiecy = 0;
