@@ -1,56 +1,35 @@
 package at.ac.tgm.fsafer.dnd_wuerfel.dicelogic;
+public class DiceDisadvantage extends DicesDecorator {
 
-import java.util.Random;
+    private Dices d2;
 
-/**
- * Diese Klasse würfelt 2 mal und gibt beide Ergebnisse zurück. Jedoch wird nur das kleinere Ergebnis weiter verwendet
- * @author Florian Safer
- * @version 2020-11-25
- */
-public class DiceDisadvantage extends DicesDecorator{
-
-    private Dices d;
-
-    /**
-     * Stqndardkonstruktor
-     * @param dices
-     */
-    public DiceDisadvantage(Dices dices) {
-        super(dices);
-        this.d = dices;
+    public DiceDisadvantage(Dices d, Dices d2) {
+        super(d);
+        this.d2 = d2;
     }
 
-    /**
-     * Überschriebene rollTheDice Methode, welche zweimal würfelt und beide Ergebnisse zurückgibt. Jedoch ist nur das
-     * kleinere Ergebnis von Bedeutung
-     * @return beide Ergebnisse
-     */
     @Override
-    public String rollTheDice() {
-        Random r = new Random();
-        int newVal = r.nextInt(d.getSites())+1;
-        int tmp = Integer.parseInt(super.rollTheDice());
-        StringBuilder b = new StringBuilder();
-        b.append("Nachteil(");
-        if(newVal <= tmp){
-            b.append(newVal);
-            b.append(", ");
-            b.append(tmp);
-        }else{
-            b.append(tmp);
-            b.append(", ");
-            b.append(newVal);
+    public int getErgebnis() {
+        int val2 = this.d2.getErgebnis();
+        if ( super.getErgebnis() >= val2)
+            return val2;
+        return super.getErgebnis();
+    }
+
+    @Override
+    public String getInformation() {
+        String information;
+        if (super.getErgebnis() <= this.d2.getErgebnis()) {
+            if (super.getInformation().equals(""))
+                information = super.getInformation() + "Disadvantage (" + super.getErgebnis() + ", " + this.d2.getErgebnis() + ")";
+            else
+                information = super.getInformation() + ", Disadvantage (" + super.getErgebnis() + ", " + this.d2.getErgebnis() + ")";
+        } else {
+            if (super.getInformation().equals(""))
+                information = super.getInformation() + "Disadvantage (" + this.d2.getErgebnis() + ", " + super.getErgebnis() + ")";
+            else
+                information = super.getInformation() + ", Disadvantage (" + this.d2.getErgebnis() + ", " + super.getErgebnis() + ")";
         }
-        b.append(")");
-        return b.toString();
-    }
-
-    /**
-     * Methode, die die Seiten des Würfels zurückgeben kann
-     * @return Seiten des Würfels
-     */
-    @Override
-    public int getSites() {
-        return this.d.getSites();
+        return information;
     }
 }

@@ -19,11 +19,12 @@ import at.ac.tgm.fsafer.dnd_wuerfel.dicelogic.*;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private String ability;
-    private String proficiecy;
-    private String item;
+    private int ability;
+    private int proficiecy;
+    private int item;
+    private int checked;
 
-    private String readAbility;
+    private int readAbility;
 
     private int toAdd, sites;
 
@@ -96,85 +97,97 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     public void rollDice(View view){
         RadioGroup g = findViewById(R.id.radioGroup);
-        Dices d;
         TextView t = findViewById(R.id.numberOut2);
         TextView f = findViewById(R.id.finalOut);
-        String tmp,number;
 
-        this.toAdd = 0;
-        getAttributes(true);
-
+        setAttributes();
+        getAttributes();
+        Dices normal = new NormalDice(20);
+        Dices dice = null;
         switch (g.getCheckedRadioButtonId()) {
             case R.id.radioNormal:
-                d = new NormalDice(20);
-                t.setText(d.rollTheDice());
+                dice = addBonus(normal);
                 break;
             case R.id.radioAdvantage:
-                d = new DiceExtrainformation(new DiceAdvantage(new NormalDice(20)), this.ability, this.proficiecy, this.item, false);
-                tmp = d.rollTheDice();
-                number = tmp.substring(8,10);
-                t.setText(Integer.parseInt(number)+this.toAdd+"");
-                f.setText(tmp);
+                dice = addBonus(new DiceAdvantage(normal, new NormalDice(20)));
                 break;
             case R.id.radioDisadvantage:
-                d = new DiceExtrainformation(new DiceDisadvantage(new NormalDice(20)), this.ability, this.proficiecy, this.item, false);
-                tmp = d.rollTheDice();
-                number = tmp.substring(9,11);
-                t.setText(Integer.parseInt(number)+this.toAdd+"");
-                f.setText(tmp);
+                dice = addBonus(new DiceDisadvantage(normal, new NormalDice(20)));
                 break;
             default:
                 t.setText("Würfelart auswählen");
 
         }
+        if (dice != null){
+            t.setText(""+dice.getErgebnis());
+            f.setText(dice.getInformation());
+        }
+    }
+
+    public Dices addBonus(Dices normal){
+        System.out.println("Bin im Bonus");
+        Dices tmp;
+        if(this.ability !=0) {
+            tmp = new DiceBonus(normal, "Ability", this.ability);
+            normal = tmp;
+        }
+        if (this.proficiecy != 0){
+            System.out.println("Bin im Profi");
+            tmp = new DiceBonus(normal, "Proficiency", this.proficiecy);
+            normal = tmp;
+        }
+        if (this.item != 0){
+            tmp = new DiceBonus(normal, "Item", this.item);
+            normal = tmp;
+        }
+        return normal;
+    }
+
+    public void setAttributes(){
+        this.ability = 0;
+        this.proficiecy = 0;
+        this.item = 0;
+        this.toAdd = 0;
     }
 
     /**
      * Diese Methode ist dafür zuständig, die in den Eingabefeldern eingegebenen Werte auszulesen
-     * @param select true für oberen Bereich, false für unteren
      */
-    public void getAttributes(boolean select){
-        CheckBox c;
+    public void getAttributes(){
+        CheckBox c1;
+        CheckBox c2;
         EditText e;
-        if (select == true){
-            c = findViewById(R.id.checkAbility);
-            if (c.isChecked()){
+        this.checked = 0;
+            c1 = findViewById(R.id.checkAbility);
+            c2 = findViewById(R.id.checkAbility2);
+            if (c1.isChecked() || c2.isChecked()){
                 this.ability = readAbility;
-                toAdd += Integer.parseInt(this.readAbility);
+                toAdd += this.readAbility;
+                this.checked++;
             }
 
-            c = findViewById(R.id.checkProficiency);
-            if(c.isChecked()){
+            c1 = findViewById(R.id.checkProficiency);
+            c2 = findViewById(R.id.checkProficiency2);
+            if(c1.isChecked() || c2.isChecked()){
                 SharedPreferences sharedPref = getSharedPreferences("Proficiency", 0);
-                this.proficiecy = sharedPref.getString(String.valueOf(R.string.proficiency),"");
-                toAdd += Integer.parseInt(this.proficiecy);
+                this.proficiecy = sharedPref.getInt(String.valueOf(R.integer.proficiency),0);
+                toAdd += this.proficiecy;
+                this.checked++;
             }
 
-            c = findViewById(R.id.checkItem);
+            c1 = findViewById(R.id.checkItem);
+            c2 = findViewById(R.id.checkItem2);
             e = findViewById(R.id.editItem);
-            if(c.isChecked())
-                this.item = e.getText().toString();
-
-        } else{
-            c = findViewById(R.id.checkAbility2);
-            if(c.isChecked()){
-                this.ability = readAbility;
-                toAdd += Integer.parseInt(this.ability);
+            if(c1.isChecked() || c2.isChecked()){
+                try {
+                    int tmp = Integer.parseInt(e.getText().toString());
+                }catch (NumberFormatException exception){
+                    TextView t = findViewById(R.id.profile_name);
+                    t.setText("Gültigen Wert bei Item eingeben");
+                }
+                this.checked++;
             }
 
-
-            c = findViewById(R.id.checkProficiency2);
-            e = findViewById(R.id.editProficiecy2);
-            if(c.isChecked()){
-                this.proficiecy = e.getText().toString();
-                toAdd += Integer.parseInt(this.proficiecy);
-            }
-            c = findViewById(R.id.checkItem2);
-            e = findViewById(R.id.editItem2);
-            if(c.isChecked())
-                this.item = e.getText().toString();
-
-        }
     }
 
     /**
@@ -184,33 +197,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void damageChecks(View view){
         CheckBox c = findViewById(R.id.critical);
         this.toAdd = 0;
-        getAttributes(false);
-
-
-
-        String tmp, number;
-        Dices d;
+        setAttributes();
+        getAttributes();
 
         TextView t = findViewById(R.id.damageOut);
         TextView f = findViewById(R.id.completeOut);
+        Dices normal = new NormalDice(sites);
+        Dices d = null;
 
         if (c.isChecked()){
-            d = new DiceExtrainformation(new DiceCritical(new NormalDice(this.sites)),this.ability, this.proficiecy,this.item, true);
-            tmp = d.rollTheDice();
-            number = tmp.substring(0,2);
-            System.out.println(this.toAdd);
-            t.setText(Integer.parseInt(number)*2+this.toAdd+"");
-            f.setText(tmp);
+            d = addBonus(new DiceCritical(normal));
         }else {
-            d = new DiceExtrainformation(new NormalDice(this.sites),this.ability, this.proficiecy,this.item, false);
-            tmp = d.rollTheDice();
-            number = tmp.substring(0,2);
-            t.setText(Integer.parseInt(number)+this.toAdd+"");
-            f.setText(tmp);
+            d = addBonus(normal);
+
         }
-        this.ability = null;
-        this.proficiecy = null;
-        this.item = null;
+        t.setText(d.getErgebnis()+"");
+        f.setText(d.getInformation());
     }
 
 
@@ -242,33 +244,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                 SharedPreferences sharedPref = getSharedPreferences("Abilitys", 0);
-                String standard = "";
+                int standard = 0;
                 switch (position){
                     case 0:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.strength), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.strength), standard);
                         System.out.println(this.readAbility);
                         break;
                     case 1:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.dexterity), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.dexterity), standard);
                         break;
                     case 2:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.constitution), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.constitution), standard);
                         break;
                     case 3:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.intelligence), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.intelligence), standard);
                         break;
                     case 4:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.wisdom), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.wisdom), standard);
                         break;
                     case 5:
-                        this.readAbility = sharedPref.getString(String.valueOf(R.string.charisma), standard);
+                        this.readAbility = sharedPref.getInt(String.valueOf(R.integer.charisma), standard);
                         break;
                 }
-                if (this.readAbility.equals("")){
+                if (this.readAbility == standard){
                     TextView t = findViewById(R.id.profile_name);
                     t.setText("Bitte ein Profil anlegen");
                 }else
-                    this.toAdd = Integer.parseInt(this.readAbility);
+                    this.toAdd = this.readAbility;
         }
     }
 

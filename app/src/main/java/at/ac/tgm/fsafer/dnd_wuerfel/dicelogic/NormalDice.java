@@ -1,44 +1,31 @@
 package at.ac.tgm.fsafer.dnd_wuerfel.dicelogic;
-
 import java.util.Random;
 
-/**
- * Normaler Würfel, welcher einmal mit beliebig vielen Seiten würfelt
- * @author Florian Safer
- * @version 2020-11-25
- */
-public class NormalDice implements Dices{
+public class NormalDice implements Dices
+{
+    private int sides;
+    private int result;
 
-    private int sites;
-
-    /**
-     * Standardkosntruktor
-     * @param sites Anzahl der Seiten
-     */
-    public NormalDice(int sites){
-        this.sites=sites;
-
-    }
-
-    /**
-     * Methode, welche einmal würfelt und die Zahl dann als String zurückgibt
-     * @return Würfelergebnis
-     */
-    @Override
-    public String rollTheDice() {
-        Random r = new Random();
-        int tmp =  r.nextInt(sites)+1;
-        if(tmp < 10){
-            return "0"+tmp;
+    public NormalDice(int sides){
+        if(sides == 4 || sides == 6 || sides == 8 || sides == 10 || sides == 12 || sides == 20){
+            this.sides = sides;
         }
-        return tmp+"";
+        Random r = new Random();
+        this.result = r.nextInt(this.sides)+1;
+
     }
 
-    /**
-     * Methode, die die Seiten des Würfels zurückgeben kann
-     * @return Seiten des Würfels
-     */
-    public int getSites() {
-        return sites;
+
+
+    @Override
+    public String getInformation() {
+        return "";
     }
+
+    @Override
+    public int getErgebnis() {
+        return this.result;
+    }
+
+
 }

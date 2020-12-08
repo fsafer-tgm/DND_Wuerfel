@@ -110,17 +110,6 @@
             android:layout_height="wrap_content" android:id="@+id/checkProficiency2"
             app:layout_constraintTop_toBottomOf="@+id/checkAbility2" android:layout_marginStart="40dp"
             app:layout_constraintStart_toEndOf="@+id/critical" android:layout_marginTop="12dp"/>
-    <EditText
-            android:layout_width="153dp"
-            android:layout_height="31dp"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editProficiecy2"
-            android:textSize="10sp"
-            android:hint="Proficiency"
-            android:layout_marginStart="12dp"
-            app:layout_constraintStart_toEndOf="@+id/checkProficiency2"
-            android:layout_marginTop="14dp" app:layout_constraintTop_toBottomOf="@+id/abilityBonus"/>
     <CheckBox
             android:text="Critical"
             android:layout_width="wrap_content"
@@ -135,8 +124,9 @@
             android:id="@+id/editItem2"
             android:textSize="10sp"
             android:hint="Item"
-            app:layout_constraintTop_toBottomOf="@+id/editProficiecy2" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/checkProficiency2" android:layout_marginTop="8dp"/>
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/checkProficiency2" android:layout_marginTop="53dp"
+            app:layout_constraintTop_toBottomOf="@+id/abilityBonus"/>
     <CheckBox
             android:text="Item"
             android:layout_width="wrap_content"

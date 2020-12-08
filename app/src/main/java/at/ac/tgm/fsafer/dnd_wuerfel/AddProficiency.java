@@ -27,20 +27,20 @@ public class AddProficiency extends AppCompatActivity {
      */
     public void saveProficiency(View view){
         boolean eingabeRichtig = true;
+        int tmp = -1;
         SharedPreferences sharedPref = getSharedPreferences("Proficiency", 0);
         EditText e = findViewById(R.id.viewProficiency);
         String s = e.getText().toString();
         SharedPreferences.Editor editor = sharedPref.edit();
         try {
-            System.out.println("Bin im try");
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.proficiency),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
         }catch (NumberFormatException exception){
             TextView t = findViewById(R.id.errorOut);
             t.setText("Enter a valid Number");
             eingabeRichtig = false;
         }
+        if (s.length()>0 && tmp != -1)
+            editor.putInt(String.valueOf(R.integer.proficiency), tmp);
         if(eingabeRichtig){
             editor.apply();
             finish();

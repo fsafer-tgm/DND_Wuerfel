@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="strength">0</integer>
+    <integer name="dexterity">0</integer>
+    <integer name="constitution">0</integer>
+    <integer name="intelligence">0</integer>
+    <integer name="wisdom">0</integer>
+    <integer name="charisma">0</integer>
+    <integer name="proficiency">0</integer>
+</resources>

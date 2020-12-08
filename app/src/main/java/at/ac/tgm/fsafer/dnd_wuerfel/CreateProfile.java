@@ -27,40 +27,46 @@ public class CreateProfile extends AppCompatActivity {
      * @param view
      */
     public void saveProfile(View view){
+        int tmp = -1;
         boolean allesRichtig = true;
         SharedPreferences sharedPref = getSharedPreferences("Abilitys", 0);
         EditText e = findViewById(R.id.inputStrength);
         String s = e.getText().toString();
         SharedPreferences.Editor editor = sharedPref.edit();
         try {
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.strength),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.strength),tmp);
+            tmp = -1;
             e = findViewById(R.id.inputDexterity);
             s = e.getText().toString();
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.dexterity),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.dexterity),tmp);
+            tmp = -1;
             e = findViewById(R.id.inputConstitiution);
             s = e.getText().toString();
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.constitution),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.constitution),tmp);
+            tmp = -1;
             e = findViewById(R.id.inputIntelligence);
             s = e.getText().toString();
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.intelligence),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.intelligence),tmp);
+            tmp = -1;
             e = findViewById(R.id.inputWisdom);
             s = e.getText().toString();
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.wisdom),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.wisdom),tmp);
+            tmp = -1;
             e = findViewById(R.id.inputCharisma);
             s = e.getText().toString();
-            if (s.length()>0)
-                editor.putString(String.valueOf(R.string.charisma),s);
-            Integer.parseInt(s);
+            tmp = Integer.parseInt(s);
+            if (tmp != -1)
+                editor.putInt(String.valueOf(R.integer.charisma),tmp);
         }catch (NumberFormatException exception){
             TextView t = findViewById(R.id.error);
             t.setText("Please enter valid numbers");
