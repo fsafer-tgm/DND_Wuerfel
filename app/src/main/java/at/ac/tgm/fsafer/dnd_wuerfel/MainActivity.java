@@ -130,14 +130,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * @return Fertiger Würfel mit allen geaddeten Boni
      */
     public Dices addBonus(Dices normal){
-        System.out.println("Bin im Bonus");
         Dices tmp;
         if(this.ability !=0) {
             tmp = new DiceBonus(normal, "Ability", this.ability);
             normal = tmp;
         }
         if (this.proficiecy != 0){
-            System.out.println("Bin im Profi");
             tmp = new DiceBonus(normal, "Proficiency", this.proficiecy);
             normal = tmp;
         }
@@ -188,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e = findViewById(R.id.editItem);
             if(c1.isChecked() || c2.isChecked()){
                 try {
-                    int tmp = Integer.parseInt(e.getText().toString());
+                    this.item = Integer.parseInt(e.getText().toString());
                 }catch (NumberFormatException exception){
                     TextView t = findViewById(R.id.profile_name);
                     t.setText("Gültigen Wert bei Item eingeben");
@@ -256,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 switch (position){
                     case 0:
                         this.readAbility = sharedPref.getInt(String.valueOf(R.integer.strength), standard);
-                        System.out.println(this.readAbility);
                         break;
                     case 1:
                         this.readAbility = sharedPref.getInt(String.valueOf(R.integer.dexterity), standard);

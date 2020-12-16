@@ -32,7 +32,7 @@ public class NormalDice implements Dices
      */
     @Override
     public String getInformation() {
-        return "Normal ("+this.result+")";
+        return "d"+this.sides+"("+this.result+")";
     }
 
     /**

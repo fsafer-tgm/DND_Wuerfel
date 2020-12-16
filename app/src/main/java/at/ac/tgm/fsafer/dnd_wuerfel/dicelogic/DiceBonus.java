@@ -7,8 +7,8 @@ package at.ac.tgm.fsafer.dnd_wuerfel.dicelogic;
  */
 public class DiceBonus extends DicesDecorator
 {
-    private int ergebnis;
-    private String information;
+    private int value;
+    private String type;
 
     /**
      * Standardkonstruktor
@@ -18,11 +18,8 @@ public class DiceBonus extends DicesDecorator
      */
     public DiceBonus(Dices d, String type, int value) {
         super(d);
-        this.ergebnis = super.getErgebnis()+value;
-        if (super.getInformation().equals(""))
-            this.information = type+" ("+value+")";
-        else
-            this.information = super.getInformation()+", "+type+" ("+value+")";
+        this.value = value;
+        this.type = type;
     }
 
     /**
@@ -31,7 +28,7 @@ public class DiceBonus extends DicesDecorator
      */
     @Override
     public int getErgebnis() {
-        return this.ergebnis;
+        return super.getErgebnis()+value;
     }
 
     /**
@@ -40,6 +37,6 @@ public class DiceBonus extends DicesDecorator
      */
     @Override
     public String getInformation() {
-        return this.information;
+        return "Bonus( "+super.getInformation()+") "+this.type+": "+this.value;
     }
 }

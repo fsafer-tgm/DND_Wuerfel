@@ -38,18 +38,6 @@ public class DiceAdvantage extends DicesDecorator
      */
     @Override
     public String getInformation() {
-        String information;
-        if (super.getErgebnis() >= this.d2.getErgebnis()) {
-            if (super.getInformation().equals(""))
-                information = super.getInformation() + "Advantage (" + super.getErgebnis() + ", " + this.d2.getErgebnis() + ")";
-            else
-                information = super.getInformation() + ", Advantage (" + super.getErgebnis() + ", " + this.d2.getErgebnis() + ")";
-        } else {
-            if (super.getInformation().equals(""))
-                information = super.getInformation() + "Advantage (" + this.d2.getErgebnis() + ", " + super.getErgebnis() + ")";
-            else
-                information = super.getInformation() + ", Advantage (" + this.d2.getErgebnis() + ", " + super.getErgebnis() + ")";
-        }
-        return information;
+        return "Advantage( "+super.getInformation()+", "+d2.getInformation()+")";
     }
 }

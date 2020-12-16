@@ -31,8 +31,6 @@ public class DiceCritical extends DicesDecorator
      */
     @Override
     public String getInformation() {
-        if(super.getInformation().equals(""))
-            return "Critical ("+super.getErgebnis()+")";
-        return super.getInformation()+", Critical ("+super.getErgebnis()+")";
+        return "Kritisch( "+super.getInformation()+")";
     }
 }
